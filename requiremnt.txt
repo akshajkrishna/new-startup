@@ -1,0 +1,11 @@
+streamlit
+transformers
+torch
+TTS
+numpy
+opencv-python-headless
+fer
+requests
+Pillow
+soundfile
+matplotlib
