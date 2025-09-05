@@ -81,7 +81,6 @@ if not st.session_state.prologue_shown:
     # wait a moment to simulate startup
     time.sleep(1.2)
     st.session_state.prologue_shown = True
-    st.experimental_user()
 
 # -----------------------
 # Sidebar controls
