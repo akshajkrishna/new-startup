@@ -81,7 +81,7 @@ if not st.session_state.prologue_shown:
     # wait a moment to simulate startup
     time.sleep(1.2)
     st.session_state.prologue_shown = True
-    st.experimental_rerun()
+    st.experimental_rerun()  # <-- This is the problematic line, fix below
 
 # -----------------------
 # Sidebar controls
@@ -479,3 +479,20 @@ st.markdown("""
 - Face scanner: FER uses MTCNN internally; on resource-constrained hosts it may be slow. Use smaller detectors or server-side GPU for production.  
 - Privacy: This demo runs models locally in the container — no third-party text is sent to commercial APIs. Do not deploy for live medical use without compliance and clinician oversight.
 """)
+
+# -----------------------
+# FIX: Remove experimental_rerun from first load block
+# -----------------------
+
+# The bug is caused by calling st.experimental_rerun() after setting st.session_state.prologue_shown = True,
+# which causes the app to rerun at a point where rerun is not allowed (e.g., after script execution).
+# Instead, show the intro only ONCE and proceed with the rest of the app without rerun.
+# Remove or comment out the st.experimental_rerun() line:
+
+# if not st.session_state.prologue_shown:
+#     ... [intro_html rendering code] ...
+#     time.sleep(1.2)
+#     st.session_state.prologue_shown = True
+#     # st.experimental_rerun()  <-- REMOVE or COMMENT OUT this line
+
+# The rest of the code and functionality remain unchanged.
